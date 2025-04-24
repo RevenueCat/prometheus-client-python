@@ -1,3 +1,4 @@
+import time
 from collections import defaultdict
 import glob
 import json
@@ -15,6 +16,7 @@ try:  # Python3
 except NameError:  # Python >= 2.5
     FileNotFoundError = IOError
 
+START_TIME = int(time.time())
 
 class MultiProcessCollector:
     """Collector for files for multi-process mode."""
@@ -58,7 +60,7 @@ class MultiProcessCollector:
 
         for f in files:
             parts = os.path.basename(f).split('_')
-            ctime = int(os.path.getctime(f))
+            ctime = START_TIME
             typ = parts[0]
             try:
                 file_values = MmapedDict.read_all_values_from_file(f)
